@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight">
+    
+    <ImageView
+        android:id="@+id/thumbnail_image"
+        android:layout_width="0dp"
+        android:layout_weight="0.4"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="0.6"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/file_name"
+            android:layout_weight="0.7"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+        <TextView
+            android:id="@+id/duration"
+            android:layout_weight="0.3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+        <TextView
+            android:id="@+id/uri"
+            android:visibility="invisible"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+    </LinearLayout>
+
+</LinearLayout>
