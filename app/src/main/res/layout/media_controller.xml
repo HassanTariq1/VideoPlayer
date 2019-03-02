@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="直播直播"
+            android:text="title"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@null"
-            android:src="@drawable/ic_media_fullscreen_stretch" />
+            android:src="@drawable/group" />
 
     </LinearLayout>
 

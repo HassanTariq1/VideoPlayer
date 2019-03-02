@@ -22,6 +22,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 
 import java.io.IOException;
 
@@ -52,11 +53,13 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
 //        adView.setAdSize(AdSize.BANNER);
 //        adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
 
+        MobileAds.initialize(this,"ca-app-pub-7809883325778350/8307934276");
+
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId("ca-app-pub-7809883325778350/8307934276");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
         mInterstitialAd.setAdListener(new AdListener(){
 
@@ -72,6 +75,7 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
             if (i.getStringExtra("URL") != null) {
                 setTitle(i.getStringExtra("TITLE"));
                 mCurrentVideo = i.getStringExtra("URL");
+                 urls=i.getStringExtra("TITLE");
                 //initializePlayer(Uri.parse(i.getStringExtra("URL")));
 
 
@@ -93,9 +97,10 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
         mMediaPlayer.setOnVideoSizeChangedListener(this);
         //(FrameLayout) findViewById(R.id.videoSurfaceContainer)
         controller = new VideoControllerView.Builder(this, this)
-
+.withVideoTitle(urls)
                 .withVideoSurfaceView(mVideoSurface)//to enable toggle display controller view
                 .canControlBrightness(true)
+
                 .canControlVolume(true)
                 .canSeekVideo(true)
                 .exitIcon(R.drawable.video_top_back)
@@ -109,6 +114,7 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
         try {
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setDataSource(this, Uri.parse(mCurrentVideo));
+
             mMediaPlayer.setOnPreparedListener(this);
             mMediaPlayer.setOnCompletionListener(this);
         } catch (IllegalArgumentException e) {
@@ -257,6 +263,8 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
             mMediaPlayer.seekTo(i);
         }
     }
+
+
 
     @Override
     public void start() {
