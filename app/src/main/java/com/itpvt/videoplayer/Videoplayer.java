@@ -106,8 +106,8 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
                 .exitIcon(R.drawable.video_top_back)
                 .pauseIcon(R.drawable.ic_media_pause)
                 .playIcon(R.drawable.ic_media_play)
-                .shrinkIcon(R.drawable.ic_media_fullscreen_shrink)
-                .stretchIcon(R.drawable.ic_media_fullscreen_stretch)
+                .shrinkIcon(R.drawable.group)
+                .stretchIcon(R.drawable.group)
                 .build((FrameLayout) findViewById(R.id.videoSurfaceContainer));//layout container that hold video play view
 
         mLoadingView.setVisibility(View.VISIBLE);
