@@ -17,6 +17,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+
 import java.io.IOException;
 
 
@@ -32,6 +38,8 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
     private View mLoadingView;
     private boolean mIsComplete;
     private String mCurrentVideo;
+    private AdView mAdView;
+    private InterstitialAd mInterstitialAd;
 
     String urls;
 
@@ -40,7 +48,24 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
         Log.e(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
+//        AdView adView = new AdView(this);
+//        adView.setAdSize(AdSize.BANNER);
+//        adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
 
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.setAdListener(new AdListener(){
+
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                finish();
+            }
+        });
 
         Intent i = getIntent();
         if (i != null) {
@@ -259,6 +284,21 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
     public void exit() {
         resetPlayer();
         finish();
+    }
+
+    public void showinter(){
+
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+finish();        }
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        showinter();
     }
 
     @Override
