@@ -5,10 +5,31 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
 
+    <ImageButton
+        android:id="@+id/bottom_fullscreen"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/layout_top"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="11dp"
+        android:background="@null"
+        android:src="@drawable/group" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/bottom_fullscreen"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="17dp"
+        android:layout_toEndOf="@+id/bottom_fullscreen"
+        android:src="@drawable/floe" />
+
     <RelativeLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:layout_alignParentTop="true"
         android:background="#CC000000"
         android:minHeight="42dp"
@@ -19,17 +40,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+
             android:src="@drawable/video_top_back" />
 
         <TextView
             android:id="@+id/top_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+
+            android:layout_toEndOf="@+id/top_back"
             android:text="title"
+
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+          android:layout_alignParentRight="true"
+            android:src="@drawable/mus"
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -51,7 +82,10 @@
             android:background="@null"
             android:src="@drawable/ic_media_play" />
 
-
+<ImageButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/pre"/>
         <TextView
             android:id="@+id/bottom_time_current"
             android:layout_width="wrap_content"
@@ -82,14 +116,11 @@
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:textStyle="bold" />
-
         <ImageButton
-            android:id="@+id/bottom_fullscreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@null"
-            android:src="@drawable/group" />
+            android:src="@drawable/next"/>
+
 
     </LinearLayout>
 
@@ -102,8 +133,8 @@
 
         <ImageView
             android:id="@+id/image_center_bg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             android:layout_gravity="center"
             android:src="@drawable/video_volume_bg" />
 

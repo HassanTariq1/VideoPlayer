@@ -114,7 +114,6 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
         try {
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setDataSource(this, Uri.parse(mCurrentVideo));
-
             mMediaPlayer.setOnPreparedListener(this);
             mMediaPlayer.setOnCompletionListener(this);
         } catch (IllegalArgumentException e) {
