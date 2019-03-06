@@ -70,17 +70,17 @@ public class FileAdapter extends ArrayAdapter<VideoFile> {
 
         TextView fileUri = (TextView) listItemView.findViewById(R.id.uri);
         fileUri.setText(uri);
-final ImageButton img= (ImageButton)listItemView.findViewById(R.id.menuu);
-img.setOnClickListener(new View.OnClickListener() {
+        final ImageButton img= (ImageButton)listItemView.findViewById(R.id.menuu);
+                img.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
 
-PopupMenu pop= new PopupMenu(mContext,img);
-pop.inflate(R.menu.menu_item);
-pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                PopupMenu pop= new PopupMenu(mContext,img);
+                pop.inflate(R.menu.menu_item);
+                pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
-        Toast.makeText(mContext,"Click on menu",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,"Click on menu",Toast.LENGTH_SHORT).show();
 
         return false;
     }
