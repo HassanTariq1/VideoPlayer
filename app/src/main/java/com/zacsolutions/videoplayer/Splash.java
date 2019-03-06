@@ -38,6 +38,7 @@ public class Splash extends AppCompatActivity {
     }
     private void startApp() {
         Intent intent = new Intent(Splash.this, All_Videos_Activity.class);
+        intent.putExtra("from","splash");
         startActivity(intent);
 
 

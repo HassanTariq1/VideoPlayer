@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class All_Videos_Adapter_list extends RecyclerView.Adapter<All_Videos_Ada
 
     ArrayList<VideoFile> arrayList;
     Activity activity;
+    All_Videos_Activity all_videos_activity = new All_Videos_Activity();
     public All_Videos_Adapter_list(ArrayList<VideoFile> arrayList, Activity activity) {
         this.arrayList = arrayList;
         this.activity = activity;
@@ -42,15 +44,18 @@ public class All_Videos_Adapter_list extends RecyclerView.Adapter<All_Videos_Ada
         Glide.with(activity)
                 .load(Uri.fromFile(new File(arrayList.get(position).getUri())))
                 .into(holder.imageView);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent videoUrlIntent = new Intent(activity,Videoplayer.class);
-                videoUrlIntent.putExtra("URL",arrayList.get(position).getUri());
-                videoUrlIntent.putExtra("TITLE",arrayList.get(position).getName());
-                activity.startActivity(videoUrlIntent);
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent videoUrlIntent = new Intent(activity,All_Videos_Activity.class);
+//                videoUrlIntent.putExtra("URL",arrayList.get(position).getUri());
+//                videoUrlIntent.putExtra("TITLE",arrayList.get(position).getName());
+//                videoUrlIntent.putExtra("from","adapter");
+//                activity.startActivity(videoUrlIntent);
+//
+//
+//            }
+//        });
 
     }
 

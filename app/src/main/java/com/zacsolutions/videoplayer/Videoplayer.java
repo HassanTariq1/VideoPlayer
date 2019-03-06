@@ -57,18 +57,16 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
 
         MobileAds.initialize(this,"ca-app-pub-7809883325778350/8307934276");
 
-        mAdView = findViewById(R.id.adView);
+        mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-7809883325778350/8307934276");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
         mInterstitialAd.setAdListener(new AdListener(){
-
             @Override
             public void onAdClosed() {
                 super.onAdClosed();
-                finish();
             }
         });
 

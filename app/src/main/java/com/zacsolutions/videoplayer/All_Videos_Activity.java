@@ -2,6 +2,7 @@ package com.zacsolutions.videoplayer;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -15,13 +16,20 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.ArrayList;
 
-public class All_Videos_Activity extends AppCompatActivity {
+public class All_Videos_Activity extends AppCompatActivity implements  RecyclerItemTouch.OnItemClickListener {
 
     private static final int REQUEST_STORAGE_PERMISSION = 2 ;
 
@@ -32,10 +40,33 @@ public class All_Videos_Activity extends AppCompatActivity {
     All_Videos_Adapter_Grid adapter_grid;
     ImageView img_menu;
     boolean alreadygrid=false;
+    private AdView mAdView;
+    private InterstitialAd mInterstitialAd;
+    String uri,title;
+    String from;
+    static ArrayList<VideoFile> data = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all__videos__recyler);
+        MobileAds.initialize(All_Videos_Activity.this,"ca-app-pub-7809883325778350/8307934276");
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        mInterstitialAd = new InterstitialAd(All_Videos_Activity.this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.setAdListener(new AdListener(){
+            @Override
+            public void onAdClosed() {
+                Intent videoUrlIntent = new Intent(All_Videos_Activity.this,Videoplayer.class);
+                videoUrlIntent.putExtra("URL",uri);
+                videoUrlIntent.putExtra("TITLE",title);
+                startActivity(videoUrlIntent);
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+        });
 
         tv_title=(TextView)findViewById(R.id.title);
         tv_title.setText("All Videos");
@@ -65,6 +96,7 @@ public class All_Videos_Activity extends AppCompatActivity {
         rc_vedios.setLayoutManager(layoutManager);
         adapter=new All_Videos_Adapter_list(Files, All_Videos_Activity.this);
         rc_vedios.setAdapter(adapter);
+        rc_vedios.addOnItemTouchListener(new RecyclerItemTouch(All_Videos_Activity.this, rc_vedios, this));
     }
     private void GridStyleRecyclerView(ArrayList<VideoFile> Files)
     {
@@ -122,7 +154,7 @@ public class All_Videos_Activity extends AppCompatActivity {
                 MediaStore.Video.VideoColumns.DISPLAY_NAME,
                 MediaStore.Video.VideoColumns.DURATION };
         Cursor c = context.getContentResolver().query(uri, projection, null, null, null);
-        ArrayList<VideoFile> data = new ArrayList<>();
+
         VideoFile file;
         if (c != null) {
             while (c.moveToNext()) {
@@ -139,5 +171,32 @@ public class All_Videos_Activity extends AppCompatActivity {
 
         return null;
     }
+    public void adpterclick(String Url,String Title)
+    {
+      uri=Url;
+      title=Title;
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
 
+            Intent videoUrlIntent = new Intent(All_Videos_Activity.this,Videoplayer.class);
+            videoUrlIntent.putExtra("URL",uri);
+            videoUrlIntent.putExtra("TITLE",uri);
+            startActivity(videoUrlIntent);
+        }
+
+
+    }
+
+    @Override
+    public void onItemClick(View view, int position)
+    {
+
+        adpterclick(data.get(position).getUri(),data.get(position).getName());
+    }
+
+    @Override
+    public void onLongItemClick(View view, int position) {
+
+    }
 }
