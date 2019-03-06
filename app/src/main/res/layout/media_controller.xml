@@ -8,8 +8,8 @@
 
     <ImageButton
         android:id="@+id/bottom_fullscreen"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_below="@+id/layout_top"
         android:layout_alignParentStart="true"
         android:layout_gravity="center_vertical"
@@ -32,9 +32,9 @@
     <RelativeLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="60dp"
         android:layout_alignParentTop="true"
-        android:background="@color/Greystrans"
+        android:background="@color/tranpblack"
         android:minHeight="42dp"
         android:padding="9dp">
 
@@ -76,7 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/Greystrans"
+        android:background="@color/tranpblack"
         android:gravity="center"
         android:minHeight="42dp"
         android:orientation="horizontal"
