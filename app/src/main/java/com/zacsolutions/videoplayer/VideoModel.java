@@ -1,4 +1,4 @@
-package com.itpvt.videoplayer;
+package com.zacsolutions.videoplayer;
 
 /**
  * Created by Hassan on 1/28/2019.

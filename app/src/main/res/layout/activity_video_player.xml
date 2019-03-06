@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:ads="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/video_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,22 +10,26 @@
 
     <FrameLayout
         android:id="@+id/videoSurfaceContainer"
-        android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toTopOf="parent">
 
-        <com.itpvt.videoplayer.ResizeSurfaceView
+        <com.zacsolutions.videoplayer.ResizeSurfaceView
             android:id="@+id/videoSurface"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="250dp" />
+            android:layout_height="250dp"
+            android:layout_gravity="center" />
+
         <ProgressBar
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
             android:id="@+id/loading"
             style="@android:style/Widget.ProgressBar.Inverse"
-            />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center" />
 
     </FrameLayout>
 
@@ -32,11 +37,16 @@
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/videoSurfaceContainer"
+        android:layout_below="@+id/videoSurfaceContainer"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="22dp"
-        android:layout_marginStart="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"></com.google.android.gms.ads.AdView>
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/videoSurfaceContainer"></com.google.android.gms.ads.AdView>
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

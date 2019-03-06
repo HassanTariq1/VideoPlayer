@@ -1,4 +1,4 @@
-package com.itpvt.videoplayer;
+package com.zacsolutions.videoplayer;
 
 import android.app.Activity;
 import android.content.Context;
@@ -128,11 +128,11 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
         private ViewGroup anchorView;
         private SurfaceView surfaceView;
         @DrawableRes
-        private int exitIcon = R.drawable.video_top_back;
+        private int exitIcon = R.drawable.back_circular_small;
         @DrawableRes
-        private int pauseIcon = R.drawable.ic_media_pause;
+        private int pauseIcon = R.drawable.pause_nw;
         @DrawableRes
-        private int playIcon = R.drawable.ic_media_play;
+        private int playIcon = R.drawable.play_new;
         @DrawableRes
         private int shrinkIcon = R.drawable.ic_media_fullscreen_shrink;
         @DrawableRes

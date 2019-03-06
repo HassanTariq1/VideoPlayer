@@ -1,4 +1,4 @@
-package com.itpvt.videoplayer;
+package com.zacsolutions.videoplayer;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

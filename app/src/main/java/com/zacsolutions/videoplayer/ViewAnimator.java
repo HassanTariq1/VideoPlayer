@@ -1,4 +1,4 @@
-package com.itpvt.videoplayer;
+package com.zacsolutions.videoplayer;
 
 import android.graphics.Rect;
 import android.support.v4.view.ViewCompat;

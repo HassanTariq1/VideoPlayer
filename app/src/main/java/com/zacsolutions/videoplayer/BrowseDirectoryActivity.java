@@ -1,4 +1,4 @@
-package com.itpvt.videoplayer;
+package com.zacsolutions.videoplayer;
 
 import android.Manifest;
 import android.content.Context;
@@ -26,11 +26,15 @@ public class BrowseDirectoryActivity extends AppCompatActivity {
 
     private static final int REQUEST_STORAGE_PERMISSION = 2 ;
 
+TextView tv_title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_directory);
 
+        tv_title=(TextView)findViewById(R.id.title);
+        tv_title.setText("All Videos");
 //        String[] fileArray = null;
 //
 //

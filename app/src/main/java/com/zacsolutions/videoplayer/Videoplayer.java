@@ -1,4 +1,4 @@
-package com.itpvt.videoplayer;
+package com.zacsolutions.videoplayer;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,12 +14,12 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
@@ -48,6 +48,8 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
     protected void onCreate(Bundle savedInstanceState) {
         Log.e(TAG, "onCreate");
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_video_player);
 //        AdView adView = new AdView(this);
 //        adView.setAdSize(AdSize.BANNER);
@@ -97,17 +99,17 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
         mMediaPlayer.setOnVideoSizeChangedListener(this);
         //(FrameLayout) findViewById(R.id.videoSurfaceContainer)
         controller = new VideoControllerView.Builder(this, this)
-.withVideoTitle(urls)
+                .withVideoTitle(urls)
                 .withVideoSurfaceView(mVideoSurface)//to enable toggle display controller view
                 .canControlBrightness(true)
 
                 .canControlVolume(true)
                 .canSeekVideo(true)
-                .exitIcon(R.drawable.video_top_back)
-                .pauseIcon(R.drawable.ic_media_pause)
-                .playIcon(R.drawable.ic_media_play)
-                .shrinkIcon(R.drawable.group)
-                .stretchIcon(R.drawable.group)
+                .exitIcon(R.drawable.back_circular_small)
+                .pauseIcon(R.drawable.pause_nw)
+                .playIcon(R.drawable.play_new)
+                .shrinkIcon(R.drawable.rotate_new)
+                .stretchIcon(R.drawable.rotate_new)
                 .build((FrameLayout) findViewById(R.id.videoSurfaceContainer));//layout container that hold video play view
 
         mLoadingView.setVisibility(View.VISIBLE);
