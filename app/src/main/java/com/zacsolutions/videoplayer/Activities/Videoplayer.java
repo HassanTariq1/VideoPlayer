@@ -1,4 +1,4 @@
-package com.zacsolutions.videoplayer;
+package com.zacsolutions.videoplayer.Activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,11 +23,14 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.zacsolutions.videoplayer.R;
+import com.zacsolutions.videoplayer.ResizeSurfaceView;
+import com.zacsolutions.videoplayer.MediaControllers.VideoControllerView;
 
 import java.io.IOException;
 
 
-public class Videoplayer extends Activity implements SurfaceHolder.Callback, MediaPlayer.OnPreparedListener,VideoControllerView.MediaPlayerControlListener, MediaPlayer.OnVideoSizeChangedListener, MediaPlayer.OnCompletionListener {
+public class Videoplayer extends Activity implements SurfaceHolder.Callback, MediaPlayer.OnPreparedListener, VideoControllerView.MediaPlayerControlListener, MediaPlayer.OnVideoSizeChangedListener, MediaPlayer.OnCompletionListener {
 
     private final static String TAG = "MainActivity";
     ResizeSurfaceView mVideoSurface;
@@ -100,7 +103,6 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
                 .withVideoTitle(urls)
                 .withVideoSurfaceView(mVideoSurface)//to enable toggle display controller view
                 .canControlBrightness(true)
-
                 .canControlVolume(true)
                 .canSeekVideo(true)
                 .exitIcon(R.drawable.back_circular_small)

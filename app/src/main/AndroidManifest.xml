@@ -17,7 +17,7 @@
         tools:node="replace">
 
         <activity android:name=".All_Videos_Activity"></activity>
-        <activity android:name=".Splash">
+        <activity android:name=".Activities.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,7 +36,7 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name=".Videoplayer"
+            android:name=".Activities.Videoplayer"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

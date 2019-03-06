@@ -1,4 +1,4 @@
-package com.zacsolutions.videoplayer;
+package com.zacsolutions.videoplayer.Adapters;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.zacsolutions.videoplayer.PojoClass.VideoFile;
+import com.zacsolutions.videoplayer.R;
+import com.zacsolutions.videoplayer.Activities.Videoplayer;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,7 +48,7 @@ public class All_Videos_Adapter_Grid extends RecyclerView.Adapter<All_Videos_Ada
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent videoUrlIntent = new Intent(activity,Videoplayer.class);
+                Intent videoUrlIntent = new Intent(activity, Videoplayer.class);
                 videoUrlIntent.putExtra("URL",arrayList.get(position).getUri());
                 videoUrlIntent.putExtra("TITLE",arrayList.get(position).getName());
                 activity.startActivity(videoUrlIntent);

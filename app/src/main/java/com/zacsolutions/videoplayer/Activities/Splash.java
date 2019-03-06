@@ -1,10 +1,13 @@
-package com.zacsolutions.videoplayer;
+package com.zacsolutions.videoplayer.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.zacsolutions.videoplayer.All_Videos_Activity;
+import com.zacsolutions.videoplayer.R;
 
 public class Splash extends AppCompatActivity {
 

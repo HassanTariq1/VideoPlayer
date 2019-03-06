@@ -1,4 +1,4 @@
-package com.zacsolutions.videoplayer;
+package com.zacsolutions.videoplayer.PojoClass;
 
 /**
  * Created by Hassan on 1/28/2019.

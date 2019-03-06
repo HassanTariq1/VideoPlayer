@@ -1,4 +1,4 @@
-package com.zacsolutions.videoplayer;
+package com.zacsolutions.videoplayer.MediaControllers;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.zacsolutions.videoplayer.R;
 
 import java.lang.ref.WeakReference;
 import java.util.Formatter;

@@ -1,4 +1,4 @@
-package com.zacsolutions.videoplayer;
+package com.zacsolutions.videoplayer.Adapters;
 
 
 import android.content.Context;

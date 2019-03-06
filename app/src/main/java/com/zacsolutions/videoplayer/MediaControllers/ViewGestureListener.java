@@ -1,4 +1,4 @@
-package com.zacsolutions.videoplayer;
+package com.zacsolutions.videoplayer.MediaControllers;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+
+import com.zacsolutions.videoplayer.MediaControllers.VideoGestureListener;
 
 /**
  * Created by Brucetoo

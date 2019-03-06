@@ -20,6 +20,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zacsolutions.videoplayer.Activities.Videoplayer;
+import com.zacsolutions.videoplayer.Adapters.FileAdapter;
+import com.zacsolutions.videoplayer.PojoClass.VideoFile;
+
 import java.util.ArrayList;
 
 public class BrowseDirectoryActivity extends AppCompatActivity {
@@ -61,7 +65,7 @@ public class BrowseDirectoryActivity extends AppCompatActivity {
                     String url =((TextView)innerLinearLayout.getChildAt(2)).getText().toString();
                     Toast.makeText(getApplicationContext(),url, Toast.LENGTH_SHORT).show();
 
-                    Intent videoUrlIntent = new Intent(getBaseContext(),Videoplayer.class);
+                    Intent videoUrlIntent = new Intent(getBaseContext(), Videoplayer.class);
                     videoUrlIntent.putExtra("URL",url);
                     videoUrlIntent.putExtra("TITLE",name);
 

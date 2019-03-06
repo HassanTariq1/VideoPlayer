@@ -1,4 +1,4 @@
-package com.zacsolutions.videoplayer;
+package com.zacsolutions.videoplayer.Adapters;
 
 import android.content.Context;
 import android.net.Uri;
@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.zacsolutions.videoplayer.PojoClass.VideoFile;
+import com.zacsolutions.videoplayer.R;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -16,7 +16,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +25,11 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.zacsolutions.videoplayer.Activities.Videoplayer;
+import com.zacsolutions.videoplayer.Adapters.All_Videos_Adapter_Grid;
+import com.zacsolutions.videoplayer.Adapters.All_Videos_Adapter_list;
+import com.zacsolutions.videoplayer.Adapters.RecyclerItemTouch;
+import com.zacsolutions.videoplayer.PojoClass.VideoFile;
 
 import java.util.ArrayList;
 
@@ -60,7 +64,7 @@ public class All_Videos_Activity extends AppCompatActivity implements  RecyclerI
         mInterstitialAd.setAdListener(new AdListener(){
             @Override
             public void onAdClosed() {
-                Intent videoUrlIntent = new Intent(All_Videos_Activity.this,Videoplayer.class);
+                Intent videoUrlIntent = new Intent(All_Videos_Activity.this, Videoplayer.class);
                 videoUrlIntent.putExtra("URL",uri);
                 videoUrlIntent.putExtra("TITLE",title);
                 startActivity(videoUrlIntent);

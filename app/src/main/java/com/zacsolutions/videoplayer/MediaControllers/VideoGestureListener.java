@@ -1,4 +1,4 @@
-package com.zacsolutions.videoplayer;
+package com.zacsolutions.videoplayer.MediaControllers;
 
 /**
  * Created by Hassan on 2/28/2019.

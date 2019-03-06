@@ -1,7 +1,6 @@
-package com.zacsolutions.videoplayer;
+package com.zacsolutions.videoplayer.Adapters;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.ads.InterstitialAd;
+import com.zacsolutions.videoplayer.All_Videos_Activity;
+import com.zacsolutions.videoplayer.PojoClass.VideoFile;
+import com.zacsolutions.videoplayer.R;
 
 import java.io.File;
 import java.util.ArrayList;
