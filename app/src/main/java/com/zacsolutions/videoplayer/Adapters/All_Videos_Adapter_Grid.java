@@ -45,15 +45,15 @@ public class All_Videos_Adapter_Grid extends RecyclerView.Adapter<All_Videos_Ada
         Glide.with(activity)
                 .load(Uri.fromFile(new File(arrayList.get(position).getUri())))
                 .into(holder.imageView);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent videoUrlIntent = new Intent(activity, Videoplayer.class);
-                videoUrlIntent.putExtra("URL",arrayList.get(position).getUri());
-                videoUrlIntent.putExtra("TITLE",arrayList.get(position).getName());
-                activity.startActivity(videoUrlIntent);
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent videoUrlIntent = new Intent(activity, Videoplayer.class);
+//                videoUrlIntent.putExtra("URL",arrayList.get(position).getUri());
+//                videoUrlIntent.putExtra("TITLE",arrayList.get(position).getName());
+//                activity.startActivity(videoUrlIntent);
+//            }
+//        });
 
     }
 

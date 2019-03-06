@@ -108,6 +108,8 @@ public class All_Videos_Activity extends AppCompatActivity implements  RecyclerI
         rc_vedios.setLayoutManager(layoutManager);
         adapter_grid=new All_Videos_Adapter_Grid(Files, All_Videos_Activity.this);
         rc_vedios.setAdapter(adapter_grid);
+        rc_vedios.addOnItemTouchListener(new RecyclerItemTouch(All_Videos_Activity.this, rc_vedios, this));
+
     }
     private void checkPermission(){
         if (ContextCompat.checkSelfPermission(this,
