@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.zacsolutions.videoplayer.All_Videos_Activity;
@@ -41,6 +42,12 @@ public class All_Videos_Adapter_list extends RecyclerView.Adapter<All_Videos_Ada
     public void onBindViewHolder(@NonNull categriesViewHolder holder, final int position)
     {
         holder.tv_duration.setText(getTime(arrayList.get(position).getDuration()));
+//        holder.imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(activity,arrayList.get(position).getUri().toString(),Toast.LENGTH_SHORT).show();
+//            }
+//        });
         holder.tv_name.setText(arrayList.get(position).getName());
         Glide.with(activity)
                 .load(Uri.fromFile(new File(arrayList.get(position).getUri())))
@@ -74,7 +81,7 @@ public class All_Videos_Adapter_list extends RecyclerView.Adapter<All_Videos_Ada
             super(itemView);
 
             tv_duration=(TextView)itemView.findViewById(R.id.duration);
-            tv_name=(TextView)itemView.findViewById(R.id.file_name);
+            tv_name=(TextView)itemView.findViewById(R.id.tv_name);
             imageView=(ImageView)itemView.findViewById(R.id.thumbnail_image);
         }
     }

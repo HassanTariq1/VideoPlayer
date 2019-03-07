@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.zacsolutions.videoplayer.R;
@@ -76,6 +77,7 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
     private View mTopLayout;
     private ImageButton mBackButton;
     private TextView mTitleText;
+    private ImageView spinner_menu;
 
     //center layout
     private View mCenterLayout;
@@ -289,7 +291,11 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
             mPauseButton.requestFocus();
             mPauseButton.setOnClickListener(mPauseListener);
         }
-
+        if (spinner_menu!=null)
+        {
+            spinner_menu.requestFocus();
+            spinner_menu.setOnClickListener(mFullscreenListener);
+        }
         mFullscreenButton = mRootView.findViewById(R.id.bottom_fullscreen);
         if (mFullscreenButton != null) {
             mFullscreenButton.requestFocus();

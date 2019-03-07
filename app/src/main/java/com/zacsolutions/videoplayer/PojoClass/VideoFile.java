@@ -1,5 +1,7 @@
 package com.zacsolutions.videoplayer.PojoClass;
 
+import android.net.Uri;
+
 /**
  * Created by Pravinyo on 6/15/2017.
  */

@@ -1,22 +1,33 @@
 package com.zacsolutions.videoplayer;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +42,7 @@ import com.zacsolutions.videoplayer.Adapters.All_Videos_Adapter_list;
 import com.zacsolutions.videoplayer.Adapters.RecyclerItemTouch;
 import com.zacsolutions.videoplayer.PojoClass.VideoFile;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class All_Videos_Activity extends AppCompatActivity implements  RecyclerItemTouch.OnItemClickListener {
@@ -48,13 +60,14 @@ public class All_Videos_Activity extends AppCompatActivity implements  RecyclerI
     private InterstitialAd mInterstitialAd;
     String uri,title;
     String from;
+    ContentResolver contentResolver;
     static ArrayList<VideoFile> data = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all__videos__recyler);
         MobileAds.initialize(All_Videos_Activity.this,"ca-app-pub-7809883325778350/8307934276");
-
+         contentResolver=getContentResolver();
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -197,12 +210,90 @@ public class All_Videos_Activity extends AppCompatActivity implements  RecyclerI
     @Override
     public void onItemClick(View view, int position)
     {
-
-        adpterclick(data.get(position).getUri(),data.get(position).getName());
-    }
+//        ConstraintLayout constraintLayout= (ConstraintLayout) view;
+//       CardView cardView= (CardView) constraintLayout.getChildAt(0);
+//       ConstraintLayout constraintLayout1=(ConstraintLayout)cardView.getChildAt(0);
+//        if (view==view.findViewById(R.id.tv_name))
+//        {
+            Toast.makeText(All_Videos_Activity.this,data.get(position).getUri().toString(),Toast.LENGTH_SHORT).show();
+            adpterclick(data.get(position).getUri(),data.get(position).getName());}
+//         }
 
     @Override
-    public void onLongItemClick(View view, int position) {
+    public void onLongItemClick(View view, int position)
+    {
+        ChoseOption(data.get(position).getUri());
+        Toast.makeText(All_Videos_Activity.this,data.get(position).getUri(),Toast.LENGTH_SHORT).show();
 
+    }
+    private void ChoseOption(final String  uri)
+    {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(All_Videos_Activity.this);
+        LayoutInflater inflater = All_Videos_Activity.this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialouge_layout, null);
+        builder.setView(dialogView);
+        final Button share,delete;
+        share=dialogView.findViewById(R.id.btn_share);
+        delete=dialogView.findViewById(R.id.btn_delete);
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogbox(uri);
+            }
+        });
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(uri));
+                intent.setType("video/*");
+                startActivity(intent);
+            }
+        });
+
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i)
+//            {
+//
+//            }
+//        });
+//        builder.setCancelable(false);
+
+        builder.show();
+    }
+    private void dialogbox(final String  uri)
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you sure you want to delete?");
+        alertDialogBuilder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+
+                        contentResolver.delete(Uri.parse(uri), null, null);
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        alertDialog.show();
     }
 }
