@@ -5,6 +5,5 @@
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search_white_24dp"
         android:orderInCategory="100"
-        app:showAsAction="always"
-        />
+        android:showAsAction="always" />
 </menu>

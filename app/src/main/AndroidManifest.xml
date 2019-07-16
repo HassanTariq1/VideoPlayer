@@ -4,9 +4,10 @@
     package="com.zacsolutions.videoplayer">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -16,8 +17,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:node="replace">
+        <service
+            android:name=".Services.VideoService"
+            android:enabled="true"
+            android:exported="true"></service>
+        <service
+            android:name=".Services.AudioService"
+            android:enabled="true"
+            android:exported="true" />
 
-        <activity android:name=".All_Videos_Activity"></activity>
+        <activity android:name=".Activities.Directory2Videos" />
+        <activity android:name=".Activities.Directories" />
+        <activity android:name=".Activities.AllAudios" />
+        <activity android:name=".All_Videos_Activity" />
         <activity android:name=".Activities.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,18 +51,22 @@
         <activity
             android:name=".Activities.Videoplayer"
             android:configChanges="keyboardHidden|orientation|screenSize" />
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="ca-app-pub-3940256099942544~3347511713" />
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+        <activity android:name=".Activities.MusicPlayer" />
+        <activity android:name=".Activities.VideoAudioplayer" />
     </application>
 
 </manifest>

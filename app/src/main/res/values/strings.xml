@@ -25,5 +25,7 @@
     <string name="pause">Pause</string>
     <string name="play">Play</string>
     <string name="restart">Restart</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="permission_denied">Sorry ! we need permission</string>
 </resources>

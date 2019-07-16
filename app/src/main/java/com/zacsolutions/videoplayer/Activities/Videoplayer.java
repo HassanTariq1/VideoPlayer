@@ -1,14 +1,17 @@
 package com.zacsolutions.videoplayer.Activities;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -26,11 +29,17 @@ import com.google.android.gms.ads.MobileAds;
 import com.zacsolutions.videoplayer.R;
 import com.zacsolutions.videoplayer.ResizeSurfaceView;
 import com.zacsolutions.videoplayer.MediaControllers.VideoControllerView;
+import com.zacsolutions.videoplayer.Services.AudioService;
+import com.zacsolutions.videoplayer.Services.VideoService;
 
 import java.io.IOException;
 
 
-public class Videoplayer extends Activity implements SurfaceHolder.Callback, MediaPlayer.OnPreparedListener, VideoControllerView.MediaPlayerControlListener, MediaPlayer.OnVideoSizeChangedListener, MediaPlayer.OnCompletionListener {
+public class Videoplayer extends Activity implements SurfaceHolder.Callback,
+        MediaPlayer.OnPreparedListener,
+        VideoControllerView.MediaPlayerControlListener,
+        MediaPlayer.OnVideoSizeChangedListener,
+        MediaPlayer.OnCompletionListener {
 
     private final static String TAG = "MainActivity";
     ResizeSurfaceView mVideoSurface;
@@ -44,6 +53,10 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
     private String mCurrentVideo;
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
+    Intent video_service_intent;
+    private VideoService videoService;
+    private boolean isServiceBound;
+    private ServiceConnection serviceConnection;
 
     String urls;
 
@@ -137,7 +150,27 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
             }
         });
     }
+    private void bindService() {
+        if (serviceConnection == null) {
+            serviceConnection = new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+//                    AudioService.MyServiceBinder myServiceBinder=(AudioService.MyServiceBinder)iBinder;
+                    VideoService.MyServiceBinder myServiceBinder = (VideoService.MyServiceBinder) iBinder;
+                    videoService = myServiceBinder.getService();
+                    isServiceBound = true;
+//                    AudioService.
+                    //  Mybindeer
+                }
 
+                @Override
+                public void onServiceDisconnected(ComponentName componentName) {
+                    isServiceBound = false;
+                }
+            };
+        }
+        bindService(video_service_intent, serviceConnection, Context.BIND_AUTO_CREATE);
+    }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 //        controller.show();
@@ -290,24 +323,51 @@ public class Videoplayer extends Activity implements SurfaceHolder.Callback, Med
     }
 
     @Override
-    public void exit() {
-        resetPlayer();
-        finish();
+    public void exit(boolean back) {
+        if (back)
+        {
+            video_service_intent = new Intent(Videoplayer.this, VideoService.class);
+            video_service_intent.putExtra("uri",urls);
+            startService(video_service_intent);
+            bindService();
+           // videoService.seekto(mMediaPlayer.getCurrentPosition());
+            resetPlayer();
+            unbindService();
+            finish();
+        }
+        else
+        {
+            resetPlayer();
+            finish();
+        }
     }
+    private void unbindService() {
+        if (isServiceBound) {
+            unbindService(serviceConnection);
+            isServiceBound = false;
+        }
+    }
+//    @Override
+//    public void exit()
+//    {
+//        resetPlayer();
+//        finish();
+//    }
 
     public void showinter(){
 
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
         } else {
-finish();        }
+                    finish();
+        }
 
 
     }
 
     @Override
     public void onBackPressed() {
-        showinter();
+       // showinter();
     }
 
     @Override

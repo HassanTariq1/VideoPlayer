@@ -2,6 +2,7 @@ package com.zacsolutions.videoplayer.MediaControllers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Message;
@@ -22,8 +23,10 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zacsolutions.videoplayer.R;
+import com.zacsolutions.videoplayer.Services.VideoService;
 
 import java.lang.ref.WeakReference;
 import java.util.Formatter;
@@ -43,6 +46,8 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
     private static final int HANDLER_UPDATE_PROGRESS = 2;//cycle update progress
     private static final long PROGRESS_SEEK = 500;
     private static final long ANIMATE_TIME = 300;
+
+    boolean back = false;
 
     private View mRootView; // root view of this
     private SeekBar mSeekBar; //seek bar for video
@@ -92,8 +97,10 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
     private View mBottomLayout;
     private ImageButton mPauseButton;
     private ImageButton mFullscreenButton;
-
     private Handler mHandler = new ControllerViewHandler(this);
+    ImageView menu;
+
+    ImageButton background_playing;
 
     public VideoControllerView(Builder builder) {
         super(builder.context);
@@ -123,7 +130,7 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
 
     public static class Builder {
 
-        private Activity context;
+        public Activity context;
         private boolean canSeekVideo = true;
         private boolean canControlVolume = true;
         private boolean canControlBrightness = true;
@@ -143,10 +150,11 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
         private int stretchIcon = R.drawable.ic_media_fullscreen_stretch;
 
         //Required
-        public Builder(@Nullable Activity context, @Nullable MediaPlayerControlListener mediaControlListener){
+        public Builder(@Nullable Activity context, @Nullable MediaPlayerControlListener mediaControlListener) {
             this.context = context;
             this.mediaPlayerControlListener = mediaControlListener;
         }
+
         public Builder with(@Nullable Activity context) {
             this.context = context;
             return this;
@@ -163,7 +171,7 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
             return this;
         }
 
-        public Builder withVideoSurfaceView(@Nullable SurfaceView surfaceView){
+        public Builder withVideoSurfaceView(@Nullable SurfaceView surfaceView) {
             this.surfaceView = surfaceView;
             return this;
         }
@@ -277,7 +285,7 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
         }
 
         mTitleText = mRootView.findViewById(R.id.top_title);
-
+        background_playing = mRootView.findViewById(R.id.background_playing);
         //center layout
         mCenterLayout = mRootView.findViewById(R.id.layout_center);
         mCenterLayout.setVisibility(GONE);
@@ -285,14 +293,17 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
         mCenterProgress = mRootView.findViewById(R.id.progress_center);
 
         //bottom layout
+        if (background_playing != null) {
+            background_playing.requestFocus();
+            background_playing.setOnClickListener(backgroundPlaying);
+        }
         mBottomLayout = mRootView.findViewById(R.id.layout_bottom);
         mPauseButton = mRootView.findViewById(R.id.bottom_pause);
         if (mPauseButton != null) {
             mPauseButton.requestFocus();
             mPauseButton.setOnClickListener(mPauseListener);
         }
-        if (spinner_menu!=null)
-        {
+        if (spinner_menu != null) {
             spinner_menu.requestFocus();
             spinner_menu.setOnClickListener(mFullscreenListener);
         }
@@ -301,7 +312,11 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
             mFullscreenButton.requestFocus();
             mFullscreenButton.setOnClickListener(mFullscreenListener);
         }
-
+        menu = mRootView.findViewById(R.id.menu);
+        if (menu != null) {
+            menu.requestFocus();
+            menu.setOnClickListener(backgroundPlaying);
+        }
         mSeekBar = mRootView.findViewById(R.id.bottom_seekbar);
         if (mSeekBar != null) {
             mSeekBar.setOnSeekBarChangeListener(mSeekListener);
@@ -356,6 +371,7 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
         }
         togglePausePlay();
         toggleFullScreen();
+        toggleBackground();
         //update progress
         mHandler.sendEmptyMessage(HANDLER_UPDATE_PROGRESS);
 
@@ -465,7 +481,7 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
         if (mCurrentTime != null) {
             Log.e(TAG, "position:" + position + " -> duration:" + duration);
             mCurrentTime.setText(stringToTime(position));
-            if(mMediaPlayerControlListener.isComplete()){
+            if (mMediaPlayerControlListener.isComplete()) {
                 mCurrentTime.setText(stringToTime(duration));
             }
         }
@@ -483,7 +499,7 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
                 mCenterLayout.setVisibility(GONE);
 //                break;// do need bread,should let gestureDetector to handle event
             default://gestureDetector handle other MotionEvent
-                if(mGestureDetector != null)
+                if (mGestureDetector != null)
                     mGestureDetector.onTouchEvent(event);
         }
         return true;
@@ -520,6 +536,18 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
         }
     }
 
+    public void toggleBackground() {
+        if (mRootView == null || mFullscreenButton == null || mMediaPlayerControlListener == null) {
+            return;
+        }
+
+        if (mMediaPlayerControlListener.isFullScreen()) {
+            mFullscreenButton.setImageResource(mShrinkIcon);
+        } else {
+            mFullscreenButton.setImageResource(mStretchIcon);
+        }
+    }
+
     private void doPauseResume() {
         if (mMediaPlayerControlListener == null) {
             return;
@@ -537,7 +565,6 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
         if (mMediaPlayerControlListener == null) {
             return;
         }
-
         mMediaPlayerControlListener.toggleFullScreen();
     }
 
@@ -593,7 +620,8 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
      */
     private OnClickListener mBackListener = new OnClickListener() {
         public void onClick(View v) {
-            mMediaPlayerControlListener.exit();
+
+            mMediaPlayerControlListener.exit(back);
         }
     };
 
@@ -608,6 +636,20 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
         }
     };
 
+    private OnClickListener backgroundPlaying = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            //Toast.makeText(mContext,"Playing",Toast.LENGTH_SHORT).show();
+            if (!back) {
+                menu.setImageResource(R.drawable.headphones_blue);
+                back = true;
+            } else if (back) {
+                menu.setImageResource(R.drawable.headphones_grey);
+                back = false;
+            }
+
+        }
+    };
     /**
      * set full screen click listener
      */
@@ -615,6 +657,12 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
         public void onClick(View v) {
             doToggleFullscreen();
             show();
+        }
+    };
+    private OnClickListener menuListner = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
         }
     };
 
@@ -655,7 +703,7 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
      */
     private void setGestureListener() {
 
-        if(mCanControlVolume) {
+        if (mCanControlVolume) {
             mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
             mMaxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         }
@@ -709,12 +757,12 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
     @Override
     public void onVerticalScroll(float percent, int direction) {
         if (direction == ViewGestureListener.SWIPE_LEFT) {
-            if(mCanControlBrightness) {
+            if (mCanControlBrightness) {
                 mCenterImage.setImageResource(R.drawable.video_bright_bg);
                 updateBrightness(percent);
             }
         } else {
-            if(mCanControlVolume) {
+            if (mCanControlVolume) {
                 mCenterImage.setImageResource(R.drawable.video_volume_bg);
                 updateVolume(percent);
             }
@@ -828,6 +876,7 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
 
         /**
          * video is complete
+         *
          * @return complete or not
          */
         boolean isComplete();
@@ -855,6 +904,7 @@ public class VideoControllerView extends FrameLayout implements VideoGestureList
         /**
          * exit media player
          */
-        void exit();
+        void exit(boolean back);
     }
+
 }

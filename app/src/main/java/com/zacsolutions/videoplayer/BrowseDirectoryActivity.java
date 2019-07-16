@@ -39,10 +39,6 @@ public class BrowseDirectoryActivity extends AppCompatActivity {
 
         tv_title=(TextView)findViewById(R.id.title);
         tv_title.setText("All Videos");
-//        String[] fileArray = null;
-//
-//
-
         checkPermission();
     }
 
